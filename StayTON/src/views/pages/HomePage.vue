@@ -41,14 +41,18 @@
             My Orders
           </v-btn>
           
-          <v-btn
+          <div>
+            <div id="connect-wallet"></div>
+            <v-btn
               elevation="0"
-              @click="toNewOffer"
+              @click="connectToWallet"
               color="primary black--text lighten-4"
-              small>
-            <v-icon left small>mdi-plus-circle</v-icon>
-            Connect Wallet
-          </v-btn>
+              small
+            >
+              <v-icon left small>mdi-plus-circle</v-icon>
+              Connect Wallet
+            </v-btn>
+          </div>
           <v-btn
               elevation="0"
               @click="toNewOffer"
@@ -118,14 +122,14 @@
     <v-bottom-sheet v-model="showAdDialog">
       <v-card tile class="pa-4">
         <page-title>
-          特别好的一个商品
+           Special Offers
           <template #backButton>
             <v-btn outlined style="border-radius: 8px" icon @click="showAdDialog=false">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </template>
           <template #subtitle>
-            广告的描述描述
+            Description
           </template>
         </page-title>
         <v-card elevation="0" class="mt-2">
@@ -134,10 +138,10 @@
         <v-card @click="toWechat"
                 elevation="0" class="mt-4 pa-2 text-center" dark color="green lighten-4 black--text">
           <div>
-            联系我们，立刻下单
+            Contact Us
           </div>
           <div class="text-caption">
-            点击这里复制我们的微信号
+            Click to copy Telegram ID
           </div>
         </v-card>
 
@@ -159,6 +163,9 @@ import {pickupOrderPath} from "@/dataLayer/service/firebase/pickupOrder"
 import CheckOutPage from "@/views/pages/OrderDetailPage.vue"
 import SearchPage from "@/views/pages/SearchPage.vue"
 import PageTitle from "@/views/widgets/PageTitle.vue"
+import TonConnectUI from '@tonconnect/ui'
+
+
 
 export default {
   name: "HomePage",
@@ -167,7 +174,17 @@ export default {
     onSnapshot(query(collection(GlobalDB, pickupOrderPath)), (snapshot) => {
       this.orderList = snapshot.docs.map(it => it.data())
       console.log(this.orderList)
-    })
+    });
+    const script = document.createElement('script');
+    script.src = 'https://telegram.org/js/telegram-web-app.js';
+    script.onload = () => {
+      const tonConnectUI = new TonConnectUI({
+        manifestUrl: 'https://stay-ton-gm.vercel.app/tonconnect-manifest.json',
+        buttonRootId: 'connect-wallet'
+      });
+      this.tonConnectUI = tonConnectUI;
+    };
+    document.body.appendChild(script);
   },
   computed: {
     userName() {
@@ -192,6 +209,18 @@ export default {
   },
 
   methods: {
+   async connectToWallet() {
+      try {
+        const connectedWallet = await this.tonConnectUI.connectWallet();
+        // Do something with connectedWallet if needed
+        console.log(connectedWallet);
+      } catch (error) {
+        console.error("Error connecting to wallet:", error);
+      }
+    },
+    handleClick() {
+      this.connectToWallet();
+    },
     openOrderDetail(orderItem) {
       this.orderItem = orderItem
       this.showDetailDialog = true

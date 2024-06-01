@@ -60,7 +60,7 @@ const requestUrlKeyboard = {
         inline_keyboard: [
             [{
                 text: "Open Mini App",
-                web_app: { url: "https://stay-ton.vercel.app/" }
+                web_app: { url: "https://stay-ton-gm.vercel.app/" }
             }]
         ]
     }

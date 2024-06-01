@@ -10,6 +10,7 @@
   "dependencies": {
     "@lottiefiles/vue-lottie-player": "^1.0.9",
     "@paypal/paypal-js": "^5.1.4",
+    "@tonconnect/ui": "^2.0.3",
     "bignumber.js": "^9.1.0",
     "buffer": "^6.0.3",
     "core-js": "^3.8.3",
