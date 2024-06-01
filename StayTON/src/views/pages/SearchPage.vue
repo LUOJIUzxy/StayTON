@@ -2,14 +2,14 @@
   <div class="pa-6">
     <template v-if="!loading">
       <page-title>
-        搜索和筛选
+        Search & Filter
         <template #backButton>
           <v-btn outlined style="border-radius: 8px" icon @click="$emit('close')">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </template>
         <template #subtitle>
-          选出您最感兴趣的内容
+          Find your dream place
         </template>
       </page-title>
 
@@ -25,14 +25,14 @@
                   @click="currentSelectTimeRange=null"
                   :dark="currentSelectTimeRange===null"
                   elevation="0" class="pa-2 px-4">
-            不限
+            Anytime
           </v-card>
           <v-card
               :color="currentSelectTimeRange==='week'?'primary':''"
               @click="currentSelectTimeRange='week'"
               :dark="currentSelectTimeRange==='week'"
               elevation="0" class="pa-2 px-4">
-            一周内
+            In 1 week
           </v-card>
           <v-card
               :color="currentSelectTimeRange==='month'?'primary':''"

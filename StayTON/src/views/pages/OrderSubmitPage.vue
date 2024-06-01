@@ -42,7 +42,7 @@
               <div>
                 <v-text-field
                     :rules="nameRules"
-                    label="最初出发城市*"
+                    label="Country*"
                     filled
                     v-model="leavingCity"
                 />
@@ -50,7 +50,7 @@
               <div>
                 <v-text-field v-model="takeoffCity"
                               :rules="nameRules"
-                              label="Checkin*"
+                              label="City*"
                               filled></v-text-field>
               </div>
             </div>
@@ -60,13 +60,13 @@
                 <v-text-field
                     v-model="landingCity"
                     :rules="nameRules"
-                    label="落地机场*"
+                    label="Address*"
                     filled></v-text-field>
               </div>
               <div>
                 <v-text-field
                     :rules="nameRules"
-                    label="最终到达城市*"
+                    label="Date*"
                     filled
                     v-model="arriveCity"
                 />
@@ -99,7 +99,7 @@
                          height="96"
                          style="border-radius: 12px"
                          :src="uploadUrl"/>
-                  <div class="text-body-2 mt-1 pa-1">✅ 机票照片已经上传</div>
+                  <div class="text-body-2 mt-1 pa-1">✅ Flat Picture Uploaded</div>
                 </div>
 
                 <v-card
@@ -112,9 +112,9 @@
                     <v-icon large>mdi-image</v-icon>
                   </div>
                   <div>
-                    <div class="text-body-2">点击这里上传机票照片</div>
+                    <div class="text-body-2">Click to upload appartment picture</div>
                     <div class="text-caption">
-                      机票您可以将票号进行部分打码隐藏，我们只核对时间与本人名字等路程信息。
+                      Please upload your appartment picture, we will verify your appartment and protect your privacy.
                     </div>
                   </div>
 
@@ -148,7 +148,7 @@
                          height="96"
                          style="border-radius: 12px"
                          :src="fileUrl"/>
-                  <div class="text-body-2 mt-1 pa-1">✅ 个人证件照片已经上传</div>
+                  <div class="text-body-2 mt-1 pa-1">✅ Identity Uploaded</div>
                 </div>
 
                 <v-card
@@ -161,9 +161,9 @@
                     <v-icon large>mdi-image</v-icon>
                   </div>
                   <div>
-                    <div class="text-body-2">点击这里上传个人证件照片</div>
+                    <div class="text-body-2">Click here to upload your identity</div>
                     <div class="text-caption">
-                      您可以上传学生卡、医保卡、交通卡等包含名字的身份证明即可，有证件号码的您可以打码隐藏后上传
+                      Please upload your identity card, we will verify your identity and protect your privacy.
                     </div>
                   </div>
 
@@ -178,12 +178,12 @@
 
           </div>
           <div class="mt-8">
-            <div class="text-subtitle-1 font-weight-black text-decoration-underline">价格设定</div>
+            <div class="text-subtitle-1 font-weight-black text-decoration-underline">Price Info</div>
             <div class="mt-2">
-              <v-text-field :rules="nameRules" label="小件物品每千克价格*" filled
+              <v-text-field :rules="nameRules" label="Price per Night*" filled
                             type="number" step="0.01" min="0"
                             v-model="smallPackagePrice"
-                            messages="不足一千克部分按照一千克计算"
+                            messages="Total Amount"
                             append-icon="mdi-currency-eur"/>
             </div>
             <div class="mt-2">
@@ -191,20 +191,20 @@
                             step="0.01"
                             v-model="filePrice"
                             min="0"
-                            label="每份文件价格*"
+                            label="Price per Night*"
                             filled
                             type="number"
                             append-icon="mdi-currency-eur"/>
             </div>
-            <div class="mb-2 mt-n2 text-caption">
-              增加可带种类，可在下方补充说明需要单独议价，提高您的帮带收入
+            <div class="mb-2 mt-n2 text-capt  ion">
+              Total Price: {{ (smallPackagePrice + filePrice).toFixed(2) }}€
             </div>
           </div>
           <div class="mt-8">
-            <div class="text-subtitle-1 font-weight-black text-decoration-underline">补充说明</div>
-            <div class="text-caption">其他想要让您的潜在客户了解的一些详情</div>
+            <div class="text-subtitle-1 font-weight-black text-decoration-underline">Descriptions</div>
+            <div class="text-caption">Extra Information you want your guests to know</div>
             <div class="mt-2">
-              <v-textarea label="补充说明" v-model="appendInfo" filled></v-textarea>
+              <v-textarea label="Extra Info" v-model="appendInfo" filled></v-textarea>
             </div>
           </div>
           <div class="mt-8">

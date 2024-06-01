@@ -15,7 +15,7 @@
           <version-display/>
         </v-card-subtitle>
         <v-card-subtitle :class="okToLogin?'':'mt-12'">
-          {{ okToLogin ? '' : '正在检查账号设置' }}
+          {{ okToLogin ? '' : 'Checking your account settings...' }}
         </v-card-subtitle>
         <v-card-text style="min-height: 196px">
           <div v-if="!okToLogin" style="display: flex;justify-content: center">
@@ -56,13 +56,13 @@
                   elevation="0"
                   color="primary"
                   @click="submit"
-              >{{ '注册/登录' }}
+              >{{ 'Signup/Login' }}
                 <v-icon right>mdi-arrow-right</v-icon>
               </v-btn>
 
 
               <div class="text-caption font-weight-bold
-               my-3 mt-12">{{ '或者使用第三方登录' }}
+               my-3 mt-12">{{ 'use third-party to login' }}
               </div>
 
               <!--           external providers list -->
@@ -85,7 +85,7 @@
             <div v-if="errorProvider" class="error--text">{{ errorProviderMessages }}</div>
             <div class="mt-5">
               <a @click="passwordForget=true">
-                {{ '忘记密码了？' }}
+                {{ 'Forgot Password?' }}
               </a>
             </div>
           </div>
@@ -164,13 +164,13 @@ export default {
 
       providers: [{
         id: 'google',
-        label: '谷歌登录',
+        label: 'Login with Google',
         isLoading: false,
         color: '#fbbc05'
       },
         {
           id: 'account-clock',
-          label: '游客登录',
+          label: 'Login as Guest',
           isLoading: false,
           color: 'black'
         }],
@@ -210,7 +210,7 @@ export default {
         this.isLoading = false
         this.isSignInDisabled = false
         this.passwordForget = false
-        this.errorMessages = "密码已经重设成功，请去邮箱里重置密码后登陆"
+        this.errorMessages = "Password reset email sent. Please check your email."
         this.password = ''
       }
     },

@@ -10,8 +10,8 @@ const relativeTime = require('dayjs/plugin/relativeTime');
 const duration = require('dayjs/plugin/duration');
 dayjs.extend(duration)
 dayjs.extend(relativeTime)
-require('dayjs/locale/zh')
-dayjs.locale('zh')
+require('dayjs/locale/en')
+dayjs.locale('eu')
 const advancedFormat = require('dayjs/plugin/advancedFormat')
 dayjs.extend(advancedFormat)
 Vue.filter('priceDisplay', function (price) {

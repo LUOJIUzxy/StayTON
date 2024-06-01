@@ -3,21 +3,21 @@
     <div style="display: grid;grid-template-columns: repeat(2,minmax(0,1fr));grid-gap: 8px">
       <div class="text-body-2">
         <div class="text-caption">
-          Location
+          City
         </div>
-        <div class="font-weight-black">{{ t.leavingCity }}->{{ t.takeoffCity }}</div>
+        <div class="font-weight-black">{{ t.leavingCity }}, {{ t.takeoffCity }}</div>
       </div>
       <div class="text-body-2">
         <div class="text-caption">
-          Date
+         Address
         </div>
-        <div class="font-weight-black">{{ t.landingCity }}->{{t.arriveCity}}</div>
+        <div class="font-weight-black">{{ t.landingCity }} {{t.arriveCity}}</div>
       </div>
     </div>
     <div class="mt-4 text-body-2">
       <div>
         <div >
-          🛫 : Check-in {{ takeoffDate }}
+          📆 Date : Check-in on {{ takeoffDate }}
         </div>
       </div>
       <div>
@@ -48,7 +48,7 @@ export default {
   name: "OrderGeneralDisplay",
   computed: {
     takeoffDate() {
-      return dayjs(this.t.takeoffDate).format('MMMDo')
+      return dayjs(this.t.takeoffDate).format('MMM-DD YYYY')
     }
   },
   props: {

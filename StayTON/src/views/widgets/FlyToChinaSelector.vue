@@ -5,13 +5,13 @@
               class="pa-2 px-4 text-body-2 d-flex align-center">
         <v-icon>mdi-airplane-landing</v-icon>
         <v-spacer></v-spacer>
-        飞往国内
+        Host
       </v-card>
       <v-card @click="flyToChina=false" :color="flyToChina?'':'primary'" :dark="!flyToChina" elevation="0"
               class=" pa-4 px-4 text-body-2 d-flex align-center">
         <v-icon>mdi-airplane-takeoff</v-icon>
         <v-spacer></v-spacer>
-        飞往海外
+        Guest
       </v-card>
     </div>
   </div>

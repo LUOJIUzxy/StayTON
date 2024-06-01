@@ -70,7 +70,7 @@
             📑 NFT:
           </template>
           <template #value>
-            {{ orderInfo.filePrice | priceDisplay }}/份
+            {{ orderInfo.filePrice | priceDisplay }}/ per Night
           </template>
         </info-line>
         <info-line>
@@ -81,7 +81,7 @@
             We will refund the deposit after the trip
           </template>
           <template #value>
-            {{ orderInfo.smallPackagePrice | priceDisplay }}/KG
+            {{ orderInfo.smallPackagePrice | priceDisplay }}/per Night
           </template>
         </info-line>
         <info-line>

@@ -211,7 +211,12 @@ export default {
   methods: {
    async connectToWallet() {
       try {
-        const connectedWallet = await this.tonConnectUI.connectWallet();
+          this.tonConnectUI.uiOptions = {
+            language: 'en',
+        };
+        //const walletsList = await this.tonConnectUI.getWallets();
+        const connectedWallet = await this.tonConnectUI.openSingleWalletModal('telegram-wallet');
+       // const connectedWallet = await this.tonConnectUI.connectWallet();
         // Do something with connectedWallet if needed
         console.log(connectedWallet);
       } catch (error) {
@@ -221,6 +226,7 @@ export default {
     handleClick() {
       this.connectToWallet();
     },
+    
     openOrderDetail(orderItem) {
       this.orderItem = orderItem
       this.showDetailDialog = true
