@@ -1,7 +1,7 @@
 <template>
   <div class="pa-4">
     <page-title>
-      我的订单
+      My Bookings
       <template #backButton>
         <v-btn outlined style="border-radius: 8px" icon @click="goBackPage">
           <v-icon>mdi-arrow-left</v-icon>
@@ -19,7 +19,7 @@
               :elevation="0"
               class="pa-2 d-flex align-center text-caption justify-center"
           >
-            我提交的
+            Published by me
           </v-card>
           <v-card
               @click="tab=1"
@@ -27,7 +27,7 @@
               :elevation="0"
               class="pa-2 d-flex align-center text-caption justify-center"
           >
-            我购买的
+            Ordered by me
           </v-card>
         </div>
         <template v-if="tab===0">
@@ -38,12 +38,12 @@
                 <order-general-display :t="t"/>
                 <div class="mt-4 d-flex align-center">
                   <v-btn v-if="!t.deleteAt" @click.stop="withdrawOrder(t)" elevation="0" color="primary lighten-4 black--text">
-                    <v-icon left>mdi-cancel</v-icon>
-                    已经没有空间/撤下广告
+                    <v-icon left>mdi-checkbox-marked</v-icon>
+                    Click to Confirm
                   </v-btn>
                   <v-btn disabled v-else @click.stop="withdrawOrder(t)" elevation="0" color="primary lighten-4 black--text">
                     <v-icon left>mdi-cancel</v-icon>
-                    已撤下广告
+                    Order Cancelled
                   </v-btn>
                   <v-spacer></v-spacer>
                 </div>
@@ -60,11 +60,11 @@
                 <div class="mt-4 d-flex align-center">
                   <v-btn v-if="!t.withInsurance" @click.stop="withdrawOrder(t)" elevation="0" color="primary lighten-4 black--text">
                     <v-icon left>mdi-shield-lock-outline</v-icon>
-                    购买被税险
+                    Buy Insurance
                   </v-btn>
                   <v-chip v-else  elevation="0" color="green lighten-4 black--text">
                     <v-icon left>mdi-shield-lock-outline</v-icon>
-                    已经购买被税险
+                    Already Insured
                   </v-chip>
                   <v-spacer></v-spacer>
                 </div>
