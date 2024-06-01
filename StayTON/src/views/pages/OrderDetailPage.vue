@@ -23,7 +23,7 @@
           QR Code to Check In
         </div>
         <div>
-          <v-card style=" height: 800px; border-radius: 16px" elevation="0">
+          <v-card style="border-radius: 16px" elevation="0">
             <div id="qr-container"></div>
           </v-card>
         </div>
@@ -306,7 +306,8 @@ export default {
   },
   methods: {
     generateQRCode() {
-      const deployLink = "EQDqlpmctNOXmEq6ohCvD7_LdFmCKTeCXIQe7TI9FnXc_aFd"
+      var deployLink = this.orderInfo.nft_addr
+     // const deployLink = "EQDqlpmctNOXmEq6ohCvD7_LdFmCKTeCXIQe7TI9FnXc_aFd"
       qrcode.toDataURL(deployLink, { small: true }, (err, url) => {
         if (err) {
           console.error(err);
