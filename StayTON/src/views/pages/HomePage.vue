@@ -42,7 +42,7 @@
           </v-btn>
           
           <div>
-            <div id="connect-wallet"></div>
+            <div id="connect-wallet">
             <v-btn
               elevation="0"
               @click="connectToWallet"
@@ -52,6 +52,7 @@
               <v-icon left small>mdi-plus-circle</v-icon>
               Connect Wallet
             </v-btn>
+            </div>
           </div>
           <v-btn
               elevation="0"
@@ -166,59 +167,86 @@ import PageTitle from "@/views/widgets/PageTitle.vue"
 import TonConnectUI from '@tonconnect/ui'
 
 
-
 export default {
   name: "HomePage",
-  components: {PageTitle, SearchPage, CheckOutPage, MyPage, OrderCard, LogoDisplay, OrderListPage},
+  components: { PageTitle, SearchPage, CheckOutPage, MyPage, OrderCard, LogoDisplay, OrderListPage },
   async mounted() {
-    onSnapshot(query(collection(GlobalDB, pickupOrderPath)), (snapshot) => {
-      this.orderList = snapshot.docs.map(it => it.data())
-      console.log(this.orderList)
+    this.loadOrders();
+    await this.loadTelegramScript();
+    this.$nextTick(() => {
+      if (document.getElementById('connect-wallet')) {
+        this.initializeTonConnect();
+      } else {
+        console.error('connect-wallet element not found in the document.');
+      }
     });
-    const script = document.createElement('script');
-    script.src = 'https://telegram.org/js/telegram-web-app.js';
-    script.onload = () => {
-      const tonConnectUI = new TonConnectUI({
-        manifestUrl: 'https://stay-ton-gm.vercel.app/tonconnect-manifest.json',
-        buttonRootId: 'connect-wallet'
-      });
-      this.tonConnectUI = tonConnectUI;
-    };
-    document.body.appendChild(script);
   },
   computed: {
     userName() {
-      return this.user.isAnonymous ? 'Guest' : this.user.displayName
+      return this.user.isAnonymous ? 'Guest' : this.user.displayName;
     },
   },
-  data: function () {
+  data() {
     return {
       showSearchDialog: false,
       showDetailDialog: false,
       showUserPanel: false,
       showMyOrders: false,
-
       offsetTop: 0,
       user: getCurrentUser(),
       userId: getCurrentUserId(),
       orderList: [],
       orderItem: null,
-
-      showAdDialog: false
-    }
+      showAdDialog: false,
+      tonConnectUI: null
+    };
   },
-
   methods: {
-   async connectToWallet() {
+    async loadOrders() {
       try {
-          this.tonConnectUI.uiOptions = {
-            language: 'en',
+        onSnapshot(query(collection(GlobalDB, pickupOrderPath)), (snapshot) => {
+          this.orderList = snapshot.docs.map(it => it.data());
+          console.log(this.orderList);
+        }, (error) => {
+          console.error("Error fetching orders:", error);
+        });
+      } catch (error) {
+        console.error("Error loading orders:", error);
+      }
+    },
+    loadTelegramScript() {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://telegram.org/js/telegram-web-app.js';
+        script.onload = () => {
+          console.log("Telegram script loaded successfully");
+          resolve();
         };
-        //const walletsList = await this.tonConnectUI.getWallets();
-        const connectedWallet = await this.tonConnectUI.openSingleWalletModal('telegram-wallet');
-       // const connectedWallet = await this.tonConnectUI.connectWallet();
-        // Do something with connectedWallet if needed
-        console.log(connectedWallet);
+        script.onerror = (error) => {
+          console.error("Failed to load Telegram script", error);
+          reject(error);
+        };
+        document.body.appendChild(script);
+      });
+    },
+    initializeTonConnect() {
+      if (typeof TonConnectUI !== 'undefined') {
+          this.tonConnectUI = new TonConnectUI({
+            manifestUrl: 'https://stay-ton-gm.vercel.app/tonconnect-manifest.json',
+            buttonRootId: 'connect-wallet'
+          });
+        } else {
+          console.error("TonConnectUI is not available");
+        }
+    },
+    async connectToWallet() {
+      try {
+        if (this.tonConnectUI) {
+          const connectedWallet = await this.tonConnectUI.connectWallet();
+          console.log(connectedWallet);
+        } else {
+          console.error("tonConnectUI is not initialized");
+        }
       } catch (error) {
         console.error("Error connecting to wallet:", error);
       }
@@ -226,37 +254,36 @@ export default {
     handleClick() {
       this.connectToWallet();
     },
-    
     openOrderDetail(orderItem) {
-      this.orderItem = orderItem
-      this.showDetailDialog = true
+      this.orderItem = orderItem;
+      this.showDetailDialog = true;
     },
-
     gotoSalePage() {
-      this.showMyOrders = true
+      this.showMyOrders = true;
     },
-
     onScroll(e) {
-      this.offsetTop = e.target.scrollingElement.scrollTop
+      this.offsetTop = e.target.scrollingElement.scrollTop;
     },
     toTop() {
       window.scrollTo({
         top: 0,
         behavior: "smooth"
-      })
+      });
     },
     toNewOffer() {
-      this.$router.push('offerSubmit')
+      this.$router.push('offerSubmit');
     },
     startSearch() {
-      this.showSearchDialog = true
+      this.showSearchDialog = true;
     },
     async toWechat() {
-      await this.copy('bangdaikefu')
-      window.open('weixin://dl/chat?bangdaikefu')
+      await this.copy('bangdaikefu');
+      window.open('weixin://dl/chat?bangdaikefu');
     }
   }
-}
+};
+
+
 </script>
 
 <style scoped>
