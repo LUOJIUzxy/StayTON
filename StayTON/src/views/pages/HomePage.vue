@@ -167,6 +167,7 @@ import {TonConnectUI} from '@tonconnect/ui'
 
 
 
+
 export default {
   name: "HomePage",
   components: {PageTitle, SearchPage, CheckOutPage, MyPage, OrderCard, LogoDisplay, OrderListPage},

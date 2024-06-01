@@ -5,7 +5,19 @@ const bot = new Telegraf('7331330433:AAE7QyYiErhbZJmHsF9ZXhKbJRQDsVHH-os');
 // Start command handler
 bot.command('start', ctx => {
     console.log(ctx.from);
-    bot.telegram.sendMessage(ctx.chat.id, 'Hello there! Welcome to StayTON - Your one and only on-chain booking tool.');
+    const gifUrl = 'https://i.gifer.com/8CPR.gif';
+    const miniappUrl = 'https://t.me/StayTon_bot/StayWithTON';
+
+    bot.telegram.sendAnimation(ctx.chat.id, gifUrl, {
+        caption: 'Hello there! Welcome to StayTON - Your one and only on-chain booking tool.',
+        reply_markup: {
+            inline_keyboard: [
+                [{ text: 'Open StayTON Miniapp', url: miniappUrl }]
+            ]
+        }
+    }).catch((error) => {
+        console.error('Error sending gif: ', error);
+    });
 });
 
 // Phone number request handler
@@ -55,16 +67,16 @@ const requestLocationKeyboard = {
 };
 
 // Inline keyboard for opening the Mini App
-const requestUrlKeyboard = {
-    reply_markup: {
-        inline_keyboard: [
-            [{
-                text: "Open Mini App",
-                web_app: { url: "https://stay-ton-gm.vercel.app/" }
-            }]
-        ]
-    }
-};
+// const requestUrlKeyboard = {
+//     reply_markup: {
+//         inline_keyboard: [
+//             [{
+//                 text: "Open Mini App",
+//                 web_app: { url: "t.me/StayTon_bot/StayWithTON" }
+//             }]
+//         ]
+//     }
+// };
 
 // Launch the bot
 bot.launch();
