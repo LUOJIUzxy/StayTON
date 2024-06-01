@@ -15,14 +15,14 @@
       <v-form v-model="formValid" ref="form">
         <div class="mt-16" style="width: 100%">
           <div>
-            <div class="text-subtitle-1 font-weight-black text-decoration-underline">Offer a Place</div>
+            <div class="text-subtitle-1 font-weight-black text-decoration-underline">Fill in Trip Details</div>
             <fly-to-china-selector v-model="flyToChina"></fly-to-china-selector>
             <div class="mt-8">
               <v-dialog style="width: min-content;" max-width="286px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field v-bind="attrs"
                                 required
-                                v-on="on" label="Date*"
+                                v-on="on" label="Check-In Date*"
                                 filled v-model="takeoffDate"
                                 :rules="nameRules"
                                 readonly>
@@ -36,7 +36,24 @@
                   </div>
                 </v-card>
               </v-dialog>
+             <v-dialog style="width: min-content;" max-width="286px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field v-bind="attrs"
+                                required
+                                v-on="on" label="Check-Out Date*"
+                                filled v-model="checkoutDate"
+                                :rules="nameRules"
+                                readonly>
 
+                  </v-text-field>
+
+                </template>
+                <v-card>
+                  <div>
+                    <v-date-picker :min="today" v-model="checkoutDate"></v-date-picker>
+                  </div>
+                </v-card>
+              </v-dialog>
             </div>
             <div style="display: grid;grid-template-columns: repeat(2,minmax(0,1fr));grid-gap: 16px">
               <div>
@@ -60,13 +77,13 @@
                 <v-text-field
                     v-model="landingCity"
                     :rules="nameRules"
-                    label="Address*"
+                    label="Address Line1*"
                     filled></v-text-field>
               </div>
               <div>
                 <v-text-field
                     :rules="nameRules"
-                    label="Date*"
+                    label="Address Line2*"
                     filled
                     v-model="arriveCity"
                 />
@@ -161,7 +178,7 @@
                     <v-icon large>mdi-image</v-icon>
                   </div>
                   <div>
-                    <div class="text-body-2">Click here to upload your identity</div>
+                    <div class="text-body-2">Click here to upload your NFT proof</div>
                     <div class="text-caption">
                       Please upload your identity card, we will verify your identity and protect your privacy.
                     </div>
@@ -197,7 +214,14 @@
                             append-icon="mdi-currency-eur"/>
             </div>
             <div class="mb-2 mt-n2 text-capt  ion">
-              Total Price: {{ (smallPackagePrice + filePrice).toFixed(2) }}€
+              Total Price: €
+            </div>
+          </div>
+          <div class="mt-8">
+            <div class="text-subtitle-1 font-weight-black text-decoration-underline">NFT Address</div>
+            <div class="text-caption">Please copy and paste your NFT address as your check-in proof</div>
+            <div class="mt-2">
+              <v-textarea label="NFT address" v-model="nft_addr" filled></v-textarea>
             </div>
           </div>
           <div class="mt-8">
@@ -224,7 +248,7 @@
                  :loading="loading"
                  :disabled="!canSubmit" color="primary" elevation="0" class="mt-4"
                  large block>
-            Upload
+            Upload to generate NFT
             <v-icon right>mdi-check</v-icon>
           </v-btn>
 
@@ -338,8 +362,10 @@ export default {
       const imageUrl = await uploadImage(this.file)
       const idCardUrl = await uploadImage(this.idFile)
       await addPickupOrder(
+      
           this.flyToChina,
           this.takeoffDate,
+          this.checkoutDate,
           this.takeoffCity,
           this.landingCity,
           this.smallPackagePrice,

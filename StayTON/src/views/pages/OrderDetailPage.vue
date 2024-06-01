@@ -18,6 +18,21 @@
       </page-title>
     </div>
     <div class="px-6">
+    <div class="mt-8 pb-16">
+        <div class="font-weight-bold text-body-1 text-decoration-underline mb-6">
+          QR Code to Check In
+        </div>
+        <div>
+          <v-card style=" height: 800px; border-radius: 16px" elevation="0">
+            <div id="qr-container"></div>
+          </v-card>
+        </div>
+      </div>
+       
+     
+    
+      
+      
       <div class="mt-8 pb-16">
         <div class="font-weight-bold text-body-1 text-decoration-underline mb-6">
           Iteanery
@@ -29,10 +44,19 @@
           <template #value>
             {{ orderInfo.takeoffDate }}
           </template>
-        </info-line>
+          </info-line>
         <info-line>
           <template #default>
-            Location:
+            Check-out Date:
+          </template>
+          <template #value>
+            {{ orderInfo.checkoutDate }}
+          </template>
+          </info-line>
+       
+        <info-line>
+          <template #default>
+            Country:
           </template>
           <template #value>
             {{ orderInfo.leavingCity }}
@@ -40,7 +64,7 @@
         </info-line>
         <info-line>
           <template #default>
-            Country:
+            City:
           </template>
           <template #value>
             {{ orderInfo.takeoffCity }}
@@ -48,7 +72,7 @@
         </info-line>
         <info-line>
           <template #default>
-            City:
+            Address Line1:
           </template>
           <template #value>
             {{ orderInfo.landingCity }}
@@ -56,7 +80,7 @@
         </info-line>
         <info-line>
           <template #default>
-            Date:
+            Address Line2:
           </template>
           <template #value>
             {{ orderInfo.arriveCity }}
@@ -67,7 +91,7 @@
         </info-line-subheader>
         <info-line>
           <template #default>
-            📑 NFT:
+            📑 Appartment Price:
           </template>
           <template #value>
             {{ orderInfo.filePrice | priceDisplay }}/ per Night
@@ -95,7 +119,7 @@
         <info-line-subheader>
           Contact Information
         </info-line-subheader>
-        <template v-if="unlocked||isMyOrder">
+        <template v-if="unlocked">
           <info-line>
             <template #default>
               📞 Contact
@@ -110,15 +134,17 @@
         </template>
         <info-line v-else>
           <template #default>
-            🔒 wait to be confirmed
+            🔒 NFT used but remained as a Voucher
           </template>
-          <template #append>
+          
+          <template #append> 
+            Congrats! You collected 10 points from this order. 
             Details will be shown after payment
           </template>
           <template #value>
 
             <v-chip @click="confirmDialog=true" class="my-1" small color="yellow lighten-4">
-              Unlock now to have 20% off
+              Redeem now to have 20% off for your next booking
             </v-chip>
           </template>
         </info-line>
@@ -136,7 +162,7 @@
       </div>
       <div class="pa-2 pb-8 white elevation-3"
            style="position: fixed;bottom: 0px;left: 0;right: 0;width: 100%">
-        <v-btn v-if="isMyOrder" block large color="green lighten-4 black--text" elevation="0">
+        <v-btn v-if="unlocked" block large color="green lighten-4 black--text" elevation="0">
           <v-icon left>mdi-shield-lock-outline</v-icon>
           This Info is ...
         </v-btn>
@@ -144,8 +170,8 @@
                block
                @click="confirmDialog=true">
           <v-icon left>mdi-lock</v-icon>
-         Click to Pay<span
-            class="text-caption text-decoration-line-through">5.00 €</span>{{ informationFeeAmount | priceDisplay }} to unlock
+         Click to Redeem your voucher & save up to<span
+            class="text-caption text-decoration-line-through">10%</span> 20% 
         </v-btn>
         <v-btn v-else-if="haveInsurance" block large color="green lighten-4 black--text" elevation="0">
           <v-icon left>mdi-shield-lock-outline</v-icon>
@@ -173,7 +199,7 @@
         </template>
         <template v-else>
           <div class="text-subtitle-1 font-weight-bold">Gas Fee:</div>
-          <div class="mt-2">☑️Check Personal Info</div>
+          <div class="mt-2">Check Personal Info</div>
           <div>☑️ Mint NFT as your Proof</div>
           <div>☑️ Transfer Money</div>
           <div class="text-subtitle-1 my-2 mt-8 font-weight-bold">Attention: </div>
@@ -218,9 +244,11 @@ import InfoLine from "@/views/widgets/items/InfoLine.vue"
 import InfoLineSubheader from "@/views/widgets/items/InfoLineSubheader.vue"
 import {addPayment, getMyPayments} from "@/dataLayer/service/firebase/payment"
 import LottieWebVueEsm from "lottie-web-vue"
-import {loadScript} from "@paypal/paypal-js"
 import {getCurrentUserId} from "@/dataLayer/service/firebase/user"
 import {Toast} from "@/plugins/vuetify"
+
+
+var qrcode = require('qrcode');
 
 export default {
   components: {
@@ -237,7 +265,8 @@ export default {
       return this.orderInfo.userId === getCurrentUserId()
     },
     unlocked() {
-      return this.myOrders.some(it => it.pickupOrderId === this.orderInfo.id)
+    return this.orderInfo.authed
+      //return this.myOrders.some(it => it.pickupOrderId === this.orderInfo.id)
     },
     haveInsurance() {
       return this.unlocked && this.myOrders.find(it => it.pickupOrderId === this.orderInfo.id)?.withInsurance
@@ -248,10 +277,6 @@ export default {
   },
   data: function () {
     return {
-      paypalCredentials: {
-        sandbox: 'AbBmj6XYaYu5X42wLdIrUMYmBUWTknOO3ikhMA_OihWFBJe-D4g-AGEG-kho6ASwvEv4bNIF57XC1TeR',
-        production: "AaaptlTEZvoBibZua_vmL5ZMdpi2pwgY5xHd4FfYk80LIas_TN97ViZFBpz50V_z_miJk3dOXbLerkez"
-      },
       buttonStyle: {
         size: 'responsive'
       },
@@ -280,6 +305,21 @@ export default {
     }
   },
   methods: {
+    generateQRCode() {
+      const deployLink = "EQDqlpmctNOXmEq6ohCvD7_LdFmCKTeCXIQe7TI9FnXc_aFd"
+      qrcode.toDataURL(deployLink, { small: true }, (err, url) => {
+        if (err) {
+          console.error(err);
+          console.log('error');
+          return;
+        }
+        const img = document.createElement('img');
+        console.log(img);
+        img.src = url;
+        console.log(url);
+        document.getElementById('qr-container').appendChild(img);
+      });
+    },
     async toWechat() {
       await this.copy('bangdaikefu')
       window.open('weixin://dl/chat?bangdaikefu')
@@ -332,11 +372,7 @@ export default {
   },
   async mounted() {
     await this.refreshData()
-    this.paypal = await loadScript({
-      currency: "EUR",
-      "client-id":
-          "AccC0QXJfXebFGT9SdaBr9InnHj2o6UdyPuPolH4ghXbN0bpTIGrCbrTlN9yFlQEZFLiEn5yBlHhVMSb"
-    })
+    await this.generateQRCode()
 
   },
   name: "CheckOutPage"

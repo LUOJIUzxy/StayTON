@@ -17,7 +17,12 @@
     <div class="mt-4 text-body-2">
       <div>
         <div >
-          📆 Date : Check-in on {{ takeoffDate }}
+          📆  Check-in on {{ takeoffDate }}
+        </div>
+      </div>
+       <div>
+        <div >
+          🗓  Check-out on {{ checkoutDate }}
         </div>
       </div>
       <div>
@@ -28,14 +33,28 @@
         </div>
       
       <div class="mt-2">
-        <div v-if="t.authed">
-          ✅ Confirmed
+        <div v-if="t.authed" class="text-h5 font-weight-bold">
+          ✅ Ready For Use
         </div>
-        <div v-else>
-          ⚠️ Waiting for confirmation
+        <div v-else class="text-h5 font-weight-bold">
+          ⚠️ Expired
         </div>
       </div>
-
+      <div class="mt-2">
+        <div>
+          💎 NFT Address: {{ t.nft_addr }}
+        </div>
+      </div>
+      <div class="mt-2 font-weight-bold">
+        <div>
+          💰 Deposit Staked: Earned {{ t.earned }} 
+           <v-avatar size="20">
+          <v-img :src="require('@/assets/toncoin.png')"></v-img>
+        </v-avatar>
+        </div>
+      </div>
+     
+         
     </div>
   </div>
 
@@ -49,6 +68,9 @@ export default {
   computed: {
     takeoffDate() {
       return dayjs(this.t.takeoffDate).format('MMM-DD YYYY')
+    },
+    checkoutDate() {
+      return dayjs(this.t.checkoutDate).format('MMM-DD YYYY')
     }
   },
   props: {

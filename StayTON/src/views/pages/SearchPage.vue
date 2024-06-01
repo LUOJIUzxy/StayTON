@@ -9,7 +9,7 @@
           </v-btn>
         </template>
         <template #subtitle>
-          Find your dream place
+          Find your NFT to Check In
         </template>
       </page-title>
 
@@ -25,7 +25,7 @@
                   @click="currentSelectTimeRange=null"
                   :dark="currentSelectTimeRange===null"
                   elevation="0" class="pa-2 px-4">
-            Anytime
+            Past NFTs
           </v-card>
           <v-card
               :color="currentSelectTimeRange==='week'?'primary':''"

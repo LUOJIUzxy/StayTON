@@ -2,7 +2,7 @@
   <div>
     <v-app-bar app elevation="0" hide-on-scroll :dark="offsetTop > 0">
       <div>
-        <logo-display/>
+        
       </div>
       <v-spacer/>
       <v-card
@@ -38,7 +38,7 @@
               color="warning black--text lighten-4"
               small>
             <v-icon left small>mdi-clipboard-list</v-icon>
-            My Orders
+            My Published NFTs
           </v-btn>
           
           <div>
@@ -59,7 +59,7 @@
               color="success black--text lighten-4"
               small>
             <v-icon left small>mdi-plus-circle</v-icon>
-            Publish Offer
+            Publish NFT
           </v-btn>
         </div>
       </template>
@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import LogoDisplay from "@/views/widgets/LogoDisplay"
+
 import MyPage from "@/views/pages/MyPage"
 import {getCurrentUser, getCurrentUserId} from "@/dataLayer/service/firebase/user"
 import OrderCard from "@/views/widgets/items/OrderCard"
@@ -170,7 +170,7 @@ import {TonConnectUI} from '@tonconnect/ui'
 
 export default {
   name: "HomePage",
-  components: {PageTitle, SearchPage, CheckOutPage, MyPage, OrderCard, LogoDisplay, OrderListPage},
+  components: {PageTitle, SearchPage, CheckOutPage, MyPage, OrderCard, OrderListPage},
   async mounted() {
     onSnapshot(query(collection(GlobalDB, pickupOrderPath)), (snapshot) => {
       this.orderList = snapshot.docs.map(it => it.data())

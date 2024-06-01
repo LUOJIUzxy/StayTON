@@ -6,12 +6,12 @@
       <div class="mt-4 d-flex align-center">
         <v-btn elevation="0" dark>
           <v-icon left>mdi-lock</v-icon>
-          Book
+          Check In
         </v-btn>
         <v-spacer></v-spacer>
         <div class="text--secondary d-flex align-center">
           <v-icon small left color="grey lighten-2">mdi-information-outline</v-icon>
-          <div class="text-caption">Secure Your Place!</div>
+          <div class="text-caption">Click to show QR Code!</div>
         </div>
 
       </div>

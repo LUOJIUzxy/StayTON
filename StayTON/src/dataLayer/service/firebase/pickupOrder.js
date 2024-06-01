@@ -8,15 +8,17 @@ import dayjs from "dayjs"
 export const pickupOrderPath = "pickupOrder"
 
 const defaultPickupOrder = {
+    nft_addr: "",
     flyToChina: true,
     takeoffDate: "",
+    checkoutDate: "",
     takeoffCity: "",
     landingCity: "",
     smallPackagePrice: 0,
     filePrice: 0,
     appendInfo: "",
     contactInfo: "",
-    authed: false,
+    authed: true,
     deleteAt: "",
     ticketUrl: "",
     arriveCity: "",
@@ -26,7 +28,7 @@ const defaultPickupOrder = {
     canTakeLuxury: false
 }
 
-export async function addPickupOrder(flyToChina, takeoffDate, takeoffCity,
+export async function addPickupOrder(flyToChina, takeoffDate, checkoutDate, takeoffCity, nft_addr,
                                      landingCity, smallPackagePrice, filePrice,
                                      appendInfo, contactInfo, ticketUrl, idCardUrl, arriveCity, leavingCity,
                                      canTakeMedicine, canTakeLuxury) {
@@ -35,8 +37,10 @@ export async function addPickupOrder(flyToChina, takeoffDate, takeoffCity,
         const newItem = Object.assign({
             id: newItemId.id, timestamp: serverTimestamp(), userId: getCurrentUserId(),
         }, defaultPickupOrder, {
+            nft_addr,
             flyToChina,
             takeoffDate,
+            checkoutDate,
             takeoffCity,
             landingCity,
             smallPackagePrice,

@@ -1,7 +1,7 @@
 <template>
   <div class="pa-4">
     <page-title>
-      My Bookings
+      Published By Me
       <template #backButton>
         <v-btn outlined style="border-radius: 8px" icon @click="goBackPage">
           <v-icon>mdi-arrow-left</v-icon>
@@ -19,7 +19,7 @@
               :elevation="0"
               class="pa-2 d-flex align-center text-caption justify-center"
           >
-            Published by me
+            New Orders
           </v-card>
           <v-card
               @click="tab=1"
@@ -27,7 +27,7 @@
               :elevation="0"
               class="pa-2 d-flex align-center text-caption justify-center"
           >
-            Ordered by me
+            Past Orders
           </v-card>
         </div>
         <template v-if="tab===0">
