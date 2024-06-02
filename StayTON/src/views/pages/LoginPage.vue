@@ -23,34 +23,7 @@
           </div>
           <div v-else>
             <v-form ref="form" v-model="isFormValid" lazy-validation>
-              <v-text-field
-                  v-model="email"
-                  :rules="[rules.required]"
-                  :validate-on-blur="false"
-                  :error="error"
-                  :label="'Email'"
-                  :name="'Email'"
-                  @keyup.enter="submit"
-                  @change="resetErrors"
-              ></v-text-field>
-
-              <v-text-field
-                  v-model="password"
-                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="[rules.required]"
-                  :type="showPassword ? 'text' : 'password'"
-                  :error="error"
-                  :error-messages="errorMessages"
-                  :label="'Password'"
-                  :name="'Password'"
-                  @change="resetErrors"
-                  @keyup.enter="submit"
-                  @click:append="showPassword = !showPassword"
-              ></v-text-field>
-
-              <v-btn
-                  :loading="isLoading"
-                  :disabled="isSignInDisabled"
+              <v-btn 
                   block
                   x-large
                   elevation="0"
@@ -197,7 +170,8 @@ export default {
       if (this.$refs.form.validate()) {
         this.isLoading = true
         this.isSignInDisabled = true
-        await this.signIn(this.email, this.password)
+        //await this.signIn(this.email, this.password)
+        await this.signIn("phoebez_99@outlook.com", "password")
         this.isLoading = false
         this.isSignInDisabled = false
       }

@@ -2,14 +2,14 @@
   <v-container style="background: #f6f6f6;width: 100%" class="fill-height align-start">
     <div class="pa-6" style="width: 100%">
       <page-title>
-        Upload Your Appartment
+        Upload Your Trip
         <template #backButton>
           <v-btn outlined style="border-radius: 8px" icon @click="$router.back()">
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
         </template>
         <template #subtitle>
-          Fill in the form to upload your appartment
+          Fill in the form to upload your trip and generate NFT as proof
         </template>
       </page-title>
       <v-form v-model="formValid" ref="form">
@@ -361,8 +361,10 @@ export default {
       this.loading = true
       const imageUrl = await uploadImage(this.file)
       const idCardUrl = await uploadImage(this.idFile)
+      this.earned = 0.00
       await addPickupOrder(
-      
+          this.earned,
+          this.nft_addr,
           this.flyToChina,
           this.takeoffDate,
           this.checkoutDate,

@@ -9,6 +9,7 @@ export const pickupOrderPath = "pickupOrder"
 
 const defaultPickupOrder = {
     nft_addr: "",
+    earned: 0.00,
     flyToChina: true,
     takeoffDate: "",
     checkoutDate: "",
