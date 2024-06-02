@@ -5,6 +5,16 @@
         
       </div>
       <v-spacer/>
+       <v-btn light
+                 @click="startSearch"
+                 elevation="0"
+                 class="mr-2"
+                 small
+                 color="primary black--text lighten-4"
+          >
+            <v-icon left small>mdi-tune</v-icon>
+            Search
+          </v-btn>
       <v-card
           @click="showUserPanel = true"
           class="pa-1 d-flex align-center rounded-pill"
@@ -20,16 +30,7 @@
       </v-card>
       <template #extension>
         <div class="d-flex align-center" style="width: 100vw">
-          <v-btn light
-                 @click="startSearch"
-                 elevation="0"
-                 class="mr-2"
-                 small
-                 color="primary black--text lighten-4"
-          >
-            <v-icon left small>mdi-tune</v-icon>
-            Search
-          </v-btn>
+         
           <v-spacer></v-spacer>
           <v-btn
               class="mr-2"
