@@ -4,6 +4,14 @@
       <div>
         
       </div>
+         <v-btn
+              elevation="0"
+              @click="toNewOffer"
+              color="success black--text lighten-4"
+              small>
+            <v-icon left small>mdi-plus-circle</v-icon>
+            Publish NFT
+          </v-btn>
       <v-spacer/>
        <v-btn light
                  @click="startSearch"
@@ -43,25 +51,20 @@
           </v-btn>
           
           <div>
-            <div id="connect-wallet"></div>
+            
             <v-btn
+              id="connect-wallet"
               elevation="0"
               @click="connectToWallet"
               color="primary black--text lighten-4"
               small
             >
-              <v-icon left small>mdi-plus-circle</v-icon>
-              Connect Wallet
+              
+              
             </v-btn>
+            
           </div>
-          <v-btn
-              elevation="0"
-              @click="toNewOffer"
-              color="success black--text lighten-4"
-              small>
-            <v-icon left small>mdi-plus-circle</v-icon>
-            Publish NFT
-          </v-btn>
+       
         </div>
       </template>
     </v-app-bar>

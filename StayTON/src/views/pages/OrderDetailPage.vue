@@ -2,7 +2,7 @@
   <div>
     <div class="px-6 py-4 pb-2 white" style="position: sticky;top: 0;">
       <page-title>
-        Details
+        NFT Details
         <template #backButton>
           <v-btn outlined style="border-radius: 8px" icon @click="$emit('close')">
             <v-icon>mdi-close</v-icon>
@@ -10,7 +10,7 @@
         </template>
         <template #subtitle>
           <div @click="copy(orderInfo.id)">
-            #{{ orderInfo.id }}
+            #{{ orderInfo.nft_addr }}
             <v-icon class="ml-2" small>mdi-content-copy</v-icon>
           </div>
 
